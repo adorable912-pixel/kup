@@ -268,10 +268,30 @@ const SUBMIT=ev=>{
  card('✅ '+nm+' 제출 서류 체크리스트','<ul class="ck">'+L.map(x=>'<li><span>'+x+'</span></li>').join('')+'</ul>'+(K==='p'?'':hl('📌 <b>인권과 성평등 교육 이수는 필수</b>예요. 평가표 제출 전에 이수 여부를 꼭 확인하세요.')+EDU_INFO))+
  card('🗂️ 서류별 자세히 보기','<p class="pick">궁금하신 항목을 클릭해주세요.</p>'+HOW.kupid+HOW.edu+HOW.ev(ev)+(K==='p'?CV:''))+CT;
 };
+// 공공연구비 인정 기준: 제공된 구기준·신기준 안내 반영
+const researchFundingCriteria=(version)=>{
+ const old=version==='old';
+ const summary=old?'최초 수주 연도에만 적용':'공공연구비 건수는 계약이 갱신되는 매 해마다 1건씩 인정';
+ const common='<ul><li><b>'+summary+'</b></li><li>연구책임자로 계약하여야 함</li><li>고려대학교 산학협력단 혹은 병원을 통하여 계약하여야 함</li></ul>';
+ const exception=hl('※ 임용 후 3년 이내의 업적평가 시, 임용 전에 수주하였더라도 임용일 이후 1년 이상 연구 기간이 남은 공공연구비는 건수로 인정함.');
+ const rows=!old?[
+ ['1건','공공연구비 (한국연구재단, 한국보건산업진흥원 등 공공기관에서 수주)'],
+ ['0.5건','한국과학기술단체총연합회 및 대한의학회 회원학회에서 공모에 의하여 수혜한 연구비 (부교수로 직위승진하는 임상교원에 한하여 인정)']
+ ]:[
+ ['1건','공공연구비 (한국연구재단, 한국보건산업진흥원 등 공공기관에서 수주)'],
+ ['1건','산업체연구비(연간5억원 이상)'],
+ ['0.5건','산업체연구비(연간5억원 미만)'],
+ ['0.5건','학회 or 기타 사회단체에서 공모 연구비'],
+ ['0.5건','IRB심의를 거친 1,2,3상 임상연구비'],
+ ['0.5건','교내 공모에 의한 연구비 (미래창의연구사업(KU-FRG), 의무부총장특별연구비, R&D 활성화 특별연구비, 의대-공대 융합연구비, 임상의과학자 역량강화사업, 안암KIST공동연구지원사업, 미래의학 선도연구비 등)']
+ ];
+ return card('🔬 공공연구비 인정 기준 <span class="b '+version+'">'+(old?'구기준':'신기준')+'</span>',common+exception+tb(['인정 건 수','구분'],rows));
+};
 let K='h',V='old';
 function draw(){
  $('v').classList.toggle('hide',K==='p');
  $('gc').innerHTML=(K==='p'?G.p.all():K==='j'?G.j[V]():G.h.all(V))+(K==='h'?"<div class=\"card\"><h2>📎 호봉승급 관련 규정</h2><div style=\"margin-top:10px\"><button type=\"button\" class=\"guide-download\" onclick=\"downloadRegulation(3)\">📥 의과대학 문턱호봉 승급 내규<br><span style=\"font-size:12px;font-weight:400\">2026. 7. 1. 개정 · HWP 다운로드</span></button></div></div>":'');
+ $('gc').innerHTML+=(K==='p'?researchFundingCriteria('old')+researchFundingCriteria('new'):researchFundingCriteria(V));
  const ev=K==='p'?evOld:K==='j'?(V==='old'?evOld:evNew):evH;
  $('bc').innerHTML=SUBMIT(ev);
 }
