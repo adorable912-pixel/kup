@@ -285,13 +285,13 @@ const researchFundingCriteria=(version)=>{
  ['0.5건','IRB심의를 거친 1,2,3상 임상연구비'],
  ['0.5건','교내 공모에 의한 연구비 (미래창의연구사업(KU-FRG), 의무부총장특별연구비, R&D 활성화 특별연구비, 의대-공대 융합연구비, 임상의과학자 역량강화사업, 안암KIST공동연구지원사업, 미래의학 선도연구비 등)']
  ];
- return card('🔬 공공연구비 인정 기준 <span class="b '+version+'">'+(old?'구기준':'신기준')+'</span>',common+exception+tb(['인정 건 수','구분'],rows));
+ return card('🔬 공공연구비 인정 기준 <span class="b '+version+'">'+(old?'구기준':'신기준')+'</span>',common+(K==='p'?'':exception)+tb(['인정 건 수','구분'],rows));
 };
 let K='h',V='old';
 function draw(){
  $('v').classList.toggle('hide',K==='p');
  $('gc').innerHTML=(K==='p'?G.p.all():K==='j'?G.j[V]():G.h.all(V))+(K==='h'?"<div class=\"card\"><h2>📎 호봉승급 관련 규정</h2><div style=\"margin-top:10px\"><button type=\"button\" class=\"guide-download\" onclick=\"downloadRegulation(3)\">📥 의과대학 문턱호봉 승급 내규<br><span style=\"font-size:12px;font-weight:400\">2026. 7. 1. 개정 · HWP 다운로드</span></button></div></div>":'');
- $('gc').innerHTML+=(K==='p'?researchFundingCriteria('old')+researchFundingCriteria('new'):researchFundingCriteria(V));
+ $('gc').innerHTML+=(K==='p'?researchFundingCriteria('old'):researchFundingCriteria(V));
  const ev=K==='p'?evOld:K==='j'?(V==='old'?evOld:evNew):evH;
  $('bc').innerHTML=SUBMIT(ev);
 }
