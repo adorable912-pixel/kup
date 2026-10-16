@@ -150,6 +150,7 @@ details{border-top:1px dashed var(--line);padding:8px 0}summary{cursor:pointer;f
 :root[data-theme="dark"] .linkbtn{color:#2b1218}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .linkbtn{color:#2b1218}}
 @media (prefers-reduced-motion:reduce){.cta,.cta-a,.notice{animation:none}}
+.pick{margin:0 0 4px;font-size:13px;color:var(--sub);word-break:keep-all}
 </style></head><body><main>
 <div class="hero"><span class="mk">🎓</span><small>KOREA UNIVERSITY COLLEGE OF MEDICINE</small>
 <h1>2027년 3월 1일자<br><em>업적평가</em> 안내 · 점수 조회</h1><p>고려대학교 의과대학 전임교원을 위한 안내 페이지예요</p></div>
@@ -259,11 +260,11 @@ const SUBMIT=ev=>{
   '<li><b>「재집계」 클릭</b><small>입력·수정한 내용이 점수에 반영돼요.</small></li>'+
   '<li><b>「잠금」 클릭</b><small>변경사항이 없을 때 눌러요. 잠금 후에는 수정할 수 없고 검색·출력만 가능해요. 잠금 해제가 필요하면 교원업적평가 담당자에게 따로 요청하세요.</small></li>'+
   '<li><b>교수업적평가표 출력</b><small>확인·출력 기간(11/4 오전 10시 ~ 11/17 오후 5시) 안에 출력해요. 마지막 날 오후 5시까지이니 여유 있게 마쳐 주세요.</small></li>'+
-  '<li><b>의학계열 교육평점표 준비</b><small>교육점수 관리시스템( http://163.152.145.22 )에서 확인 후 “PDF로 출력”하고, 마지막 장 하단에 서명·날인해요.</small></li>'+
+  '<li><b>의학계열 교육평점표 준비</b><small>교육점수 관리시스템( http://163.152.145.22 )에서 확인 후 “PDF로 출력”하고, 마지막 장 하단에 서명·날인해요.</small><a class="linkbtn" href="http://163.152.145.22" target="_blank" rel="noopener">🔗 교육점수 관리시스템 바로가기<span>163.152.145.22 ↗</span></a></li>'+
   '<li><b>증빙자료 준비</b><small>업적평가표에 포함된 항목만 준비하면 돼요. 항목별 안내는 아래 「서류별 자세히 보기」를 확인하세요.</small></li>'+
   '<li><b>11/17(화)까지 주임교수께 제출</b><small>'+(K==='p'?'정년보장은 이력서와 추천인 명단도 함께 제출해요 (추천서 명단은 의대 행정팀 한동경 참조로 메일 발송).':'위 서류를 모두 모아 소속 교실 업적평가위원장(주임교수)께 제출해요.')+'</small></li></ol>')+
  card('✅ '+nm+' 제출 서류 체크리스트','<ul class="ck">'+L.map(x=>'<li><span>'+x+'</span></li>').join('')+'</ul>'+(K==='p'?'':hl('📌 <b>인권과 성평등 교육 이수는 필수</b>예요. 평가표 제출 전에 이수 여부를 꼭 확인하세요.')))+
- card('🗂️ 서류별 자세히 보기',HOW.kupid+HOW.edu+HOW.ev(ev)+(K==='p'?CV:''))+CT;
+ card('🗂️ 서류별 자세히 보기','<p class="pick">궁금하신 항목을 클릭해주세요.</p>'+HOW.kupid+HOW.edu+HOW.ev(ev)+(K==='p'?CV:''))+CT;
 };
 let K='h',V='old';
 function draw(){
