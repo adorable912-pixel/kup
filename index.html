@@ -184,6 +184,12 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const hex=u=>[...u].map(x=>x.toString(16).padStart(2,'0')).join('');
 const unhex=h=>new Uint8Array(h.match(/../g).map(x=>parseInt(x,16)));
 async function open_(gyobun,name,dob){
+ const nm=name.replace(/\s+/g,'');
+ const cands=/[A-Za-z]$/.test(nm)?[nm.replace(/[a-z]$/,c=>c.toUpperCase())]:[nm,nm+'A',nm+'B'];
+ for(const c of cands){const r=await open1_(gyobun,c,dob);if(r)return r}
+ return null;
+}
+async function open1_(gyobun,name,dob){
  const pw=gyobun.trim().toUpperCase().replace(/^0+/,'')+'|'+name.replace(/\s+/g,'')+'|'+dob.replace(/\D/g,'');
  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);
  const k=new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:unhex(SALT),iterations:IT},km,512));
